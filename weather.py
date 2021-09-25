@@ -38,6 +38,8 @@ capital = [
     ('Tocantins', 'TO', 'Palmas', 457721),
 ]
 
+capital_default = capital[0]
+
 # CODE, DESCRIPTION en-EN, DESCRIPTION pt-BR
 condition = [
     (0, 'tornado', ''),
@@ -93,13 +95,11 @@ condition = [
 
 
 def search_uf(UF=""):
-    if UF:
-        for state, uf, city, woeid in capital:
-            if uf == UF.upper():
-                return (state.decode('latin1'), uf,
-                        city.decode('latin1'), woeid)
-    else:
-        return ('Distrito Federal', 'DF', 'Brasilia', 455819, )
+    filtered =  list(filter(lambda x: x[1] == UF, capital))
+    if not filtered:
+        return capital_default
+
+    return filtered[0]
 
 
 def weather(UF=""):
@@ -153,4 +153,4 @@ def weather(UF=""):
     return results
 
 
-print weather('MG')
+print(eather('MG'))
